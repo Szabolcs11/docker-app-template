@@ -1,0 +1,25 @@
+version: "3.0"
+
+services:
+  api:
+    build: ./api
+    container_name: my-api
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - "3102:3102"
+
+  app:
+    build: ./app
+    container_name: my-app
+    restart: always
+    networks:
+      - proxy
+    ports:
+      - "3201:80"
+
+networks:
+  proxy:
+    external: true
+    name: nginx-proxy-manager_default
