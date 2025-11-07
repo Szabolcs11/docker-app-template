@@ -15,6 +15,18 @@ function App() {
       }
     };
 
+    const getUsers = async () => {
+      try {
+        const res = await fetch(API_URL + "api/users");
+        const data = await res.json();
+        console.log("API Users:", data);
+      } catch (error) {
+        console.error("Error fetching API users:", error);
+      }
+    };
+
+    getUsers();
+
     fetchUptime();
   }, []);
 
