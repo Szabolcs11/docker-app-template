@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 🔍 Debug secret (test)
+        run: |
+          if [ -z "${{ secrets.VPS_KEY }}" ]; then
+            echo "❌ VPS_KEY is empty"
+          else
+            echo "✅ VPS_KEY is set"
+          fi
+
       - name: 🧰 Checkout code
         uses: actions/checkout@v4
 
