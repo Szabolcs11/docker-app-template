@@ -10,12 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🧾 Save VPS_KEY to file (debug only)
+      - name: 📤 Copy private key to VPS (debug only)
         run: |
-          echo "${{ secrets.VPS_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-          ls -l private_key.pem
-          head -n 5 private_key.pem
+          scp -o StrictHostKeyChecking=no private_key.pem ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/tmp/private_key.pem
 
       - name: 🧰 Checkout code
         uses: actions/checkout@v4
