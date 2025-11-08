@@ -10,13 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔍 Debug secret (test)
+      - name: 🧾 Save VPS_KEY to file (debug only)
         run: |
-          if [ -z "${{ secrets.VPS_KEY }}" ]; then
-            echo "❌ VPS_KEY is empty"
-          else
-            echo "✅ VPS_KEY is set"
-          fi
+          echo "${{ secrets.VPS_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ls -l private_key.pem
+          head -n 5 private_key.pem
 
       - name: 🧰 Checkout code
         uses: actions/checkout@v4
