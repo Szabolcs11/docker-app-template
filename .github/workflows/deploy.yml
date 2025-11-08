@@ -10,9 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📤 Copy private key to VPS (debug only)
+      - name: 🔍 Debug secret (test)
         run: |
-          scp -o StrictHostKeyChecking=no private_key.pem ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/tmp/private_key.pem
+          if [ -z "${{ secrets.VPS_KEY }}" ]; then
+            echo "❌ VPS_KEY is empty"
+          else
+            echo "✅ VPS_KEY is set"
+          fi
 
       - name: 🧰 Checkout code
         uses: actions/checkout@v4
