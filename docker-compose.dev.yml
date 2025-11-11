@@ -5,6 +5,8 @@ services:
     build: ./api
     container_name: DEV-docker-api-template
     restart: always
+    env_file:
+      - ./api/.env.dev
     networks:
       - proxy
     ports:
@@ -14,6 +16,8 @@ services:
     build: ./app
     container_name: DEV-docker-app-template
     restart: always
+    env_file:
+      - ./app/.env.dev
     networks:
       - proxy
     ports:
