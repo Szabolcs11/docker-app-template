@@ -9,6 +9,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const users = await userService.getAllUsers();
     return res.json(users);
   } catch (err) {
+    console.log(err);
     return returnError(res, responses.Unexpected_Error, "en");
   }
 };

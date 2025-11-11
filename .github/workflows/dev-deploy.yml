@@ -1,0 +1,40 @@
+name: 🚀 Deploy to DEV VPS
+
+on:
+  push:
+    branches:
+      - dev
+      - feature/*
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧰 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔐 Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VPS_KEY }}
+
+      - name: 🚀 Deploy to DEV
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            # Create separate dev directory if it doesn't exist
+            mkdir -p ${{ secrets.VPS_PATH }}/dev &&
+            cd ${{ secrets.VPS_PATH }}/dev &&
+            
+            # Clone or update repo
+            if [ ! -d .git ]; then
+              git clone ${{ secrets.REPO_URL }} . --branch dev
+            else
+              git fetch origin dev &&
+              git reset --hard origin/dev
+            fi &&
+            
+            # Start dev containers (separate network or ports)
+            docker compose -f docker-compose.dev.yml down &&
+            docker compose -f docker-compose.dev.yml up -d --build
+          "
