@@ -3,6 +3,7 @@ import { API_URL } from "./consts";
 
 function App() {
   const [response, setResponse] = useState(null);
+  const [users, setUsers] = useState(null);
   useEffect(() => {
     const fetchUptime = async () => {
       try {
@@ -20,6 +21,7 @@ function App() {
         const res = await fetch(API_URL + "api/users");
         const data = await res.json();
         console.log("API Users:", data);
+        setUsers(data);
       } catch (error) {
         console.error("Error fetching API users:", error);
       }
@@ -36,6 +38,11 @@ function App() {
         <strong>API Response:123</strong>
       </p>
       <pre>{response ? JSON.stringify(response) : "Loading..."}</pre>
+
+      <p>
+        <strong>Users:</strong>
+      </p>
+      <pre>{users ? JSON.stringify(users, null, 2) : "Loading..."}</pre>
     </div>
   );
 }
