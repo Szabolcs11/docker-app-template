@@ -6,7 +6,7 @@ services:
     container_name: docker-api-template
     restart: always
     networks:
-      - proxy
+      - proxy_net
     ports:
       - "3102:3102"
 
@@ -15,11 +15,12 @@ services:
     container_name: docker-app-template
     restart: always
     networks:
-      - proxy
+      - proxy_net
     ports:
       - "3201:80"
 
 networks:
-  proxy:
+  core_net:
     external: true
-    name: nginx-proxy-manager_default
+  proxy_net:
+    external: true
