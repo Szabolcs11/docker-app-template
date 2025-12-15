@@ -3,7 +3,11 @@ import { User } from "./../types/";
 
 export const userQueries = {
   async getAll(): Promise<User[]> {
+    console.log('getAll users');
+    console.log('pool');
+    console.log(pool);
     const [rows] = await pool.query("SELECT * FROM users");
+    console.log(rows);
     return rows as User[];
   },
 
