@@ -6,7 +6,7 @@ services:
       - proxy_net
       - core_net
     ports:
-      - "3102:3102"
+      - "3112:3112"
 
   app:
     build: ./app
@@ -14,7 +14,7 @@ services:
     networks:
       - proxy_net
     ports:
-      - "3201:80"
+      - "3211:80"
 
 networks:
   proxy_net:

@@ -29,14 +29,12 @@ jobs:
               echo 'Deploying PRODUCTION'
               git fetch origin master
               git reset --hard origin/master
-              docker compose down
-              docker compose up -d --build
+              docker compose -p project-prod up -d --build
 
             elif [ '${{ github.ref_name }}' = 'dev' ]; then
               echo 'Deploying DEVELOPMENT'
               git fetch origin dev
               git reset --hard origin/dev
-              docker compose -f docker-compose.dev.yml down
-              docker compose -f docker-compose.dev.yml up -d --build
+              docker compose -p project-dev -f docker-compose.dev.yml up -d --build
             fi
           "
