@@ -1,25 +1,21 @@
-version: "3.0"
-
 services:
   api:
     build: ./api
-    container_name: DEV-docker-api-template
-    restart: always
+    container_name: dev-docker-api-template
     networks:
-      - proxy
+      - proxy_net
+      - core_net
     ports:
-      - "3112:3112"
+      - "3102:3102"
 
   app:
     build: ./app
-    container_name: DEV-docker-app-template
-    restart: always
+    container_name: dev-docker-app-template
     networks:
-      - proxy
-    ports:
-      - "3211:80"
+      - proxy_net
 
 networks:
-  proxy:
+  proxy_net:
     external: true
-    name: nginx-proxy-manager_default
+  core_net:
+    external: true
