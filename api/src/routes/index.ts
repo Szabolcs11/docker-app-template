@@ -5,7 +5,7 @@ import authRoutes from "./authRoutes";
 const router = Router();
 
 router.get("/uptime", (req, res) => {
-  res.status(200).json({ message: "Uptime is healthy!!!" });
+  res.status(200).json({ message: "DEV! Uptime is healthy!!!" });
 });
 
 router.use("/users", userRoutes);

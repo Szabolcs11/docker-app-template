@@ -5,14 +5,16 @@ services:
     networks:
       - proxy_net
       - core_net
-    ports:
-      - "3102:3102"
+    expose:
+      - "3102"
 
   app:
     build: ./app
     container_name: dev-docker-app-template
     networks:
       - proxy_net
+    expose:
+      - "80"
 
 networks:
   proxy_net:
