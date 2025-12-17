@@ -35,8 +35,7 @@ function App() {
   return (
     <div>
       <p>
-        <p>DEV1</p>
-        <strong>API Response:12346599</strong>
+        <strong>API Response:12346599 MASTER</strong>
       </p>
       <pre>{response ? JSON.stringify(response) : "Loading..."}</pre>
 
