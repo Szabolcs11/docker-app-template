@@ -1,6 +1,7 @@
 services:
   api:
     build: ./api
+    container_name: dev-docker-api-template
     networks:
       - proxy_net
       - core_net
@@ -9,6 +10,7 @@ services:
 
   app:
     build: ./app
+    container_name: dev-docker-app-template
     networks:
       - proxy_net
     expose:
