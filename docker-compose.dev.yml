@@ -1,20 +1,18 @@
 services:
   api:
     build: ./api
-    container_name: dev-docker-api-template
     networks:
       - proxy_net
       - core_net
-    ports:
-      - "3112:3112"
+    expose:
+      - "3102"
 
   app:
     build: ./app
-    container_name: dev-docker-app-template
     networks:
       - proxy_net
-    ports:
-      - "3211:80"
+    expose:
+      - "80"
 
 networks:
   proxy_net:
