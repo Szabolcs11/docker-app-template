@@ -1,4 +1,4 @@
-name: 🚀 Deploy
+name: 🚀 Deploy to VPS
 
 on:
   push:
@@ -11,29 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: 🧰 Checkout code
+        uses: actions/checkout@v4
 
-      - uses: webfactory/ssh-agent@v0.9.0
+      - name: 🔐 Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.VPS_KEY }}
 
-      - name: Deploy
+      - name: 🚀 Deploy via SSH
         run: |
-          ssh deploy@${{ secrets.VPS_HOST }} << 'EOF'
-            cd /srv/apps/project
-            git fetch origin
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "
+            set -e
+            cd ${{ secrets.VPS_PATH }}
 
-            if [ "${{ github.ref_name }}" = "master" ]; then
-              git checkout master
-              git pull
+            if [ '${{ github.ref_name }}' = 'master' ]; then
+              echo 'Deploying PRODUCTION'
+              git fetch origin master
+              git reset --hard origin/master
+              docker compose down
               docker compose up -d --build
 
-            elif [ "${{ github.ref_name }}" = "dev" ]; then
-              git checkout dev
-              git pull
+            elif [ '${{ github.ref_name }}' = 'dev' ]; then
+              echo 'Deploying DEVELOPMENT'
+              git fetch origin dev
+              git reset --hard origin/dev
+              docker compose -f docker-compose.dev.yml down
               docker compose -f docker-compose.dev.yml up -d --build
-
-            else
-              echo "Feature branch deploy skipped"
             fi
-          EOF
+          "
