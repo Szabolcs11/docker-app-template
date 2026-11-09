@@ -2,22 +2,24 @@ services:
   api:
     build: ./api
     container_name: docker-api-template
+    restart: unless-stopped
     networks:
-      - proxy_net
-      - core_net
+      - proxy
+      - database
     expose:
       - "3102"
 
   app:
     build: ./app
     container_name: docker-app-template
+    restart: unless-stopped
     networks:
-      - proxy_net
+      - proxy
     expose:
       - "80"
 
 networks:
-  proxy_net:
+  proxy:
     external: true
-  core_net:
+  database:
     external: true
